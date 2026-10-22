@@ -348,3 +348,11 @@ Commercial Licence. See `LICENSE` and `LICENSE-COMMERCIAL`. It depends on
 ## Privacy
 
 [Privacy policy](https://pdfluent.com/privacy/)
+
+## More from PDFluent
+
+- [PDFluent SDK](https://github.com/pdfluent/pdfluent-sdk): the engine this server runs on, with bindings for Rust, Python, Node.js, .NET, Java, C and WebAssembly.
+- [Documentation](https://pdfluent.com/docs) and [pdfluent.com](https://pdfluent.com).
+- [Examples](https://github.com/pdfluent/examples) and the [benchmark harness](https://github.com/pdfluent/pdfluent-bench).
+- [PDFluent editor](https://github.com/pdfluent/pdfluent): a free desktop PDF editor, including for commercial use.
+- Report a vulnerability to [hello@pdfluent.com](mailto:hello@pdfluent.com), not in a public issue.
