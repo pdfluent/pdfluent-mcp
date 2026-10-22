@@ -186,3 +186,11 @@ on the PDFs in `tests/fixtures`, and try to step outside the allowed roots.
 The same as the `pdfluent` package it runs on: AGPL-3.0-only, or the PDFluent
 Commercial Licence. See `LICENSE` and `LICENSE-COMMERCIAL`. It depends on
 `mcp` (MIT).
+
+## More from PDFluent
+
+- [PDFluent SDK](https://github.com/pdfluent/pdfluent-sdk): the engine this server runs on, with bindings for Rust, Python, Node.js, .NET, Java, C and WebAssembly.
+- [Documentation](https://pdfluent.com/docs) and [pdfluent.com](https://pdfluent.com).
+- [Examples](https://github.com/pdfluent/examples) and the [benchmark harness](https://github.com/pdfluent/pdfluent-bench).
+- [PDFluent editor](https://github.com/pdfluent/pdfluent): a free desktop PDF editor, including for commercial use.
+- Report a vulnerability to [security@pdfluent.com](mailto:security@pdfluent.com), not in a public issue.
