@@ -335,7 +335,12 @@ def test_a_path_outside_the_roots_is_refused(tmp_path):
 def test_dot_dot_cannot_step_out_of_a_root(tmp_path):
     inside = tmp_path / "inside"
     inside.mkdir()
-    sneaky = os.path.join(str(inside), "..", "..", os.path.relpath(STRUCTURED_PDF, os.path.dirname(str(tmp_path))))
+    # The target sits next to the root, in the same temp tree: os.path.relpath to the
+    # fixtures fails on Windows runners where the checkout (D:) and temp (C:) differ.
+    outside = tmp_path / "outside.pdf"
+    outside.write_bytes(open(STRUCTURED_PDF, "rb").read())
+    sneaky = os.path.join(str(inside), "..", "outside.pdf")
+    assert os.path.dirname(os.path.normpath(sneaky)) == str(tmp_path)
     text = _error(_call("extract_markdown", {"path": sneaky}, args=("--root", str(inside))))
     assert "outside the allowed roots" in text
 
@@ -507,7 +512,8 @@ def test_a_long_query_is_refused():
 def test_refusals_do_not_list_the_roots_and_keep_the_callers_spelling(tmp_path):
     spelled = os.path.join(str(tmp_path), "..", os.path.basename(str(tmp_path)), "x.pdf")
     text = _error(_call("get_metadata", {"path": spelled}, args=ROOT))
-    assert spelled in text
+    # The refusal quotes the path with repr(), which doubles backslashes on Windows.
+    assert repr(spelled)[1:-1] in text
     assert FIXTURES not in text
 
 
