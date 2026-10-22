@@ -1,0 +1,48 @@
+name: Commit identity
+
+# The small version of the PDFluent SDK repository's identity guard, for repositories that do not carry the SDK's
+# scripts: every commit a push or pull request adds is authored and committed by the noreply alias, and carries a
+# sign-off. Self-contained on purpose (no scripts from another tree), so the job can be a required check.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  commit-identity:
+    name: No commit publishes a personal address
+    runs-on: ubuntu-latest
+    env:
+      ALIAS: 10383561+jasperdew@users.noreply.github.com
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Range
+        id: range
+        run: |
+          if [ "${{ github.event_name }}" = pull_request ]; then
+            echo "range=${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = push ] && [ "${{ github.event.before }}" != 0000000000000000000000000000000000000000 ]; then
+            echo "range=${{ github.event.before }}..${{ github.sha }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "range=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Every commit is authored and committed by the noreply alias
+        run: |
+          bad=0
+          for c in $(git rev-list "${{ steps.range.outputs.range }}"); do
+            a=$(git log -1 --format=%ae "$c"); m=$(git log -1 --format=%ce "$c")
+            if [ "$a" != "$ALIAS" ] || { [ "$m" != "$ALIAS" ] && [ "$m" != "noreply@github.com" ]; }; then
+              echo "::error::commit $c is authored by '$a' and committed by '$m'; use $ALIAS"; bad=1
+            fi
+          done
+          exit $bad
+      - name: Every commit carries a sign-off
+        run: |
+          bad=0
+          for c in $(git rev-list "${{ steps.range.outputs.range }}"); do
+            git log -1 --format=%B "$c" | grep -q '^Signed-off-by: ' || { echo "::error::commit $c has no Signed-off-by"; bad=1; }
+          done
+          exit $bad

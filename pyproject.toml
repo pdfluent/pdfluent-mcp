@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pdfluent-mcp"
+version = "0.2.0"
+description = "MCP server for PDFluent: read, search and fill local PDFs from Claude, Cursor, VS Code and other MCP clients. Your documents stay on your machine."
+readme = "README.md"
+# The one licence field. The licence of this package follows the licence of
+# the `pdfluent` package it runs on; a change there is a change of this
+# expression and of the LICENSE file(s) listed below, nothing else.
+license = "AGPL-3.0-only OR LicenseRef-PDFluent-Commercial"
+license-files = ["LICENSE", "LICENSE-COMMERCIAL"]
+authors = [{ name = "Innovation Trigger B.V.", email = "team@pdfluent.com" }]
+# mcp 2.x needs 3.10.
+requires-python = ">=3.10"
+# mcp is MIT. pdfluent 1.2.0 is the first release with `pages=` on
+# extract_markdown and extract_blocks, which every page window here uses.
+dependencies = ["pdfluent>=1.2.0", "mcp>=2.2,<3"]
+keywords = ["mcp", "model-context-protocol", "pdf", "rag", "agent", "claude", "cursor", "pdfluent"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing",
+]
+
+[project.scripts]
+pdfluent-mcp = "pdfluent_mcp.server:main"
+
+[project.urls]
+Homepage = "https://pdfluent.com"
+Documentation = "https://pdfluent.com/docs"
+Repository = "https://github.com/pdfluent/pdfluent-mcp"
+"Bug Tracker" = "https://github.com/pdfluent/pdfluent-mcp/issues"
+
+[project.optional-dependencies]
+test = ["pytest>=7.0", "anyio>=4"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["pdfluent_mcp"]
+
+[tool.hatch.build.targets.sdist]
+# The tests (with their encrypted fixture and path-shaped comments) stay in the repository and run in
+# CI from there; the sdist carries the package, the skill and the metadata only.
+include = ["pdfluent_mcp", "skill", "server.json", "README.md", "LICENSE", "LICENSE-COMMERCIAL"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

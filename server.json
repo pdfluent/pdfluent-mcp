@@ -1,0 +1,55 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.pdfluent/pdfluent-mcp",
+  "title": "PDFluent",
+  "description": "Read, search and fill PDFs as markdown, text, tables, forms. Your documents stay on your machine.",
+  "repository": {
+    "url": "https://github.com/pdfluent/pdfluent-mcp",
+    "source": "github"
+  },
+  "websiteUrl": "https://pdfluent.com",
+  "version": "0.2.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "registryBaseUrl": "https://pypi.org",
+      "identifier": "pdfluent-mcp",
+      "version": "0.2.0",
+      "runtimeHint": "uvx",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "named",
+          "name": "--root",
+          "description": "A directory the server may read and write in; repeat for more than one.",
+          "isRequired": true,
+          "isRepeated": true,
+          "format": "filepath",
+          "valueHint": "/path/to/documents"
+        }
+      ],
+      "environmentVariables": [
+        {
+          "name": "PDFLUENT_MCP_MAX_PAGES",
+          "description": "Pages one call may read (default 200).",
+          "isRequired": false,
+          "format": "number"
+        },
+        {
+          "name": "PDFLUENT_MCP_MAX_BYTES",
+          "description": "Largest document the server opens, in bytes (default 104857600).",
+          "isRequired": false,
+          "format": "number"
+        },
+        {
+          "name": "PDFLUENT_MCP_MAX_OUTPUT_CHARS",
+          "description": "Longest result one call returns, in characters (default 200000).",
+          "isRequired": false,
+          "format": "number"
+        }
+      ]
+    }
+  ]
+}
