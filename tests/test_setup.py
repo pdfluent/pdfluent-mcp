@@ -343,3 +343,14 @@ def test_backup_survives_in_place_write_during_swap(tmp_path, monkeypatch):
     backup = setup.atomic_write(path, b"original", b"replacement")
     assert path.read_bytes() == b"replacement"
     assert backup.read_bytes() == b"late in-place edit"
+
+
+def test_backup_falls_back_to_copy_when_links_fail(tmp_path, monkeypatch):
+    path = tmp_path / "config.json"
+    path.write_bytes(b"original")
+    def no_link(*args, **kwargs):
+        raise OSError("links unsupported")
+    monkeypatch.setattr(setup.os, "link", no_link)
+    backup = setup.atomic_write(path, b"original", b"replacement")
+    assert path.read_bytes() == b"replacement"
+    assert backup.read_bytes() == b"original"

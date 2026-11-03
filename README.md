@@ -37,6 +37,11 @@ name, for example `uvx pdfluent-mcp setup --root ~/Documents`. Without
   `pdfluent` entry, and only when it was written by `pdfluent-mcp` (or with
   `--force`). It does not remove the Python package.
 
+Close the clients before you run setup or uninstall. Files are replaced
+atomically, but no portable call lets setup detect a client that saves the same
+file in the last instant; a save in that gap can be lost, and where hard links are
+unavailable the backup is a plain copy and the gap is wider.
+
 Setup keeps unrelated settings and servers, preserves TOML comments, and
 refuses malformed configs and symbolic links. A different existing `pdfluent`
 entry is left alone unless you pass `--force`
