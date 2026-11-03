@@ -17,7 +17,7 @@ authors = [{ name = "Innovation Trigger B.V.", email = "team@pdfluent.com" }]
 requires-python = ">=3.10"
 # mcp is MIT. pdfluent 1.2.0 is the first release with `pages=` on
 # extract_markdown and extract_blocks, which every page window here uses.
-dependencies = ["pdfluent>=1.2.0", "mcp>=2.2,<3"]
+dependencies = ["pdfluent>=1.2.0", "mcp>=2.2,<3", "tomlkit>=0.13,<1"]
 keywords = ["mcp", "model-context-protocol", "pdf", "rag", "agent", "claude", "cursor", "pdfluent"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -33,7 +33,7 @@ classifiers = [
 ]
 
 [project.scripts]
-pdfluent-mcp = "pdfluent_mcp.server:main"
+pdfluent-mcp = "pdfluent_mcp.cli:main"
 
 [project.urls]
 Homepage = "https://pdfluent.com"
@@ -50,7 +50,7 @@ packages = ["pdfluent_mcp"]
 [tool.hatch.build.targets.sdist]
 # The tests (with their encrypted fixture and path-shaped comments) stay in the repository and run in
 # CI from there; the sdist carries the package, the skill and the metadata only.
-include = ["pdfluent_mcp", "skill", "server.json", "README.md", "LICENSE", "LICENSE-COMMERCIAL"]
+include = ["pdfluent_mcp", "skill", "server.json", "README.md", "CLAIMS.md", "LICENSE", "LICENSE-COMMERCIAL"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

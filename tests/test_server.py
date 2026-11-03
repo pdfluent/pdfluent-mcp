@@ -57,7 +57,7 @@ def _session(body, args=(), env=None, client_roots=None):
             environment.update(env)
         params = StdioServerParameters(
             command=sys.executable,
-            args=["-m", "pdfluent_mcp.server", *args],
+            args=["-m", "pdfluent_mcp", *args],
             env=environment,
         )
         callback = None

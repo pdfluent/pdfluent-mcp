@@ -49,6 +49,46 @@ pip install pdfluent-mcp
 pdfluent-mcp --root ~/Documents
 ```
 
+### One-line client setup
+
+Register the server with Claude Desktop, Claude Code, Cursor and Codex:
+([SETUP-001](CLAIMS.md#setup-001))
+
+```bash
+uvx pdfluent-mcp setup --root /path/to/documents
+# If installed with pip:
+pdfluent-mcp setup --root /path/to/documents
+```
+
+Choose an existing PDF directory. Repeat `--root` for more directories. Without
+`--root`, the server relies on client MCP roots or `PDFLUENT_MCP_ROOTS`.
+([SETUP-002](CLAIMS.md#setup-002))
+
+Preview changes, select clients, or remove the registration:
+([SETUP-003](CLAIMS.md#setup-003))
+
+```bash
+pdfluent-mcp setup --dry-run
+pdfluent-mcp setup --client claude-code --client codex --root /path/to/documents
+pdfluent-mcp uninstall --dry-run
+pdfluent-mcp uninstall
+# Equivalent removal command:
+pdfluent-mcp setup --uninstall
+```
+
+Setup defaults to all four clients, using their user configs: Claude Desktop's
+platform config described below, Claude Code's `~/.claude.json`, Cursor's
+`~/.cursor/mcp.json`, and Codex's `~/.codex/config.toml` (`CODEX_HOME` is
+respected). Restart clients after setup. Setup keeps unrelated settings and
+servers, preserves TOML comments, and refuses malformed configs or symbolic
+links. Use `--force` to replace a different existing `pdfluent` entry. Uninstall
+removes only the `pdfluent` entry; it does not remove the Python package.
+([SETUP-001](CLAIMS.md#setup-001), [SETUP-003](CLAIMS.md#setup-003))
+
+The saved launcher uses the absolute `uvx` path when available. Otherwise it
+uses the current Python interpreter; keep that Python environment installed.
+([SETUP-004](CLAIMS.md#setup-004))
+
 ### Allowed roots
 
 The server touches nothing outside its roots. Give them with `--root` (repeat

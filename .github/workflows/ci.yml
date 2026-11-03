@@ -27,5 +27,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install ".[test]"
+      - name: Setup preserves each client format
+        run: python -m pytest -q tests/test_setup.py
+      - name: Setup acceptance tests reject removed behavior
+        run: python scripts/check_setup_mutations.py
       - name: The server answers every tool over stdio
-        run: python -m pytest -q
+        run: python -m pytest -q tests/test_server.py
