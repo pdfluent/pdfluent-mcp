@@ -10,6 +10,9 @@
 - Setup keeps unrelated settings and TOML comments, writes atomically, refuses
   malformed configs and symbolic links, and leaves a different existing
   `pdfluent` entry alone unless `--force` is given.
+- Setup saves a timestamped backup of each config file before replacing it,
+  re-checks the file just before the swap, and uninstall removes only an entry
+  that `pdfluent-mcp` wrote unless `--force` is given.
 - Add `tomlkit` as a dependency.
 - Add a Claude plugin manifest (`.claude-plugin/plugin.json`) that bundles the
   skill and starts the server with `uvx pdfluent-mcp==0.3.0`.

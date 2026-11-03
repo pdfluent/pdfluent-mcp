@@ -29,10 +29,13 @@ name, for example `uvx pdfluent-mcp setup --root ~/Documents`. Without
 ([SETUP-001](CLAIMS.md#setup-001), [SETUP-002](CLAIMS.md#setup-002)).
 
 - `--dry-run` shows what would change and writes nothing.
+- Before it replaces a config file, setup saves the previous file next to it as
+  `<name>.pdfluent-backup-<timestamp>` and prints the path.
 - `--client claude-desktop|claude-code|cursor|codex` limits it to some clients
   (repeatable).
 - `uvx pdfluent-mcp uninstall` (or `setup --uninstall`) removes only the
-  `pdfluent` entry. It does not remove the Python package.
+  `pdfluent` entry, and only when it was written by `pdfluent-mcp` (or with
+  `--force`). It does not remove the Python package.
 
 Setup keeps unrelated settings and servers, preserves TOML comments, and
 refuses malformed configs and symbolic links. A different existing `pdfluent`

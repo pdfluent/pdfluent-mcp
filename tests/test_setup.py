@@ -173,7 +173,7 @@ def test_invalid_root_writes_nothing(sandbox):
 
 def test_uninstall_rejects_install_options(sandbox):
     with pytest.raises(SystemExit) as error:
-        cli.main(["uninstall", "--force"])
+        cli.main(["uninstall", "--root", "/tmp"])
     assert error.value.code == 2
 
 
@@ -194,7 +194,9 @@ def test_atomic_failure_preserves_config(tmp_path, monkeypatch):
     with pytest.raises(OSError, match="simulated"):
         setup.atomic_write(path, b"original", b"replacement")
     assert path.read_bytes() == b"original"
-    assert list(tmp_path.iterdir()) == [path]
+    # Only the config and its backup remain: no temporary file.
+    names = sorted(p.name for p in tmp_path.iterdir())
+    assert names[0] == "config.json" and len(names) == 2 and names[1].startswith("config.json.pdfluent-backup-")
 
 
 @pytest.mark.skipif(os.name == "nt", reason="POSIX permissions and symlinks")
@@ -233,3 +235,77 @@ def test_server_dispatch_preserved(monkeypatch):
     monkeypatch.setitem(sys.modules, "pdfluent_mcp.server", types.SimpleNamespace(main=lambda args: calls.append(args)))
     cli.main(["--root", "/example"])
     assert calls == [["--root", "/example"]]
+
+
+def test_backup_keeps_previous_bytes_and_never_overwrites(tmp_path):
+    path = tmp_path / "config.json"
+    path.write_bytes(b"one")
+    first = setup.atomic_write(path, b"one", b"two")
+    second = setup.atomic_write(path, b"two", b"three")
+    assert first != second
+    assert first.read_bytes() == b"one" and second.read_bytes() == b"two"
+    assert path.read_bytes() == b"three"
+    assert setup.atomic_write(tmp_path / "new.json", None, b"x") is None
+
+
+def test_backup_failure_leaves_config_untouched(tmp_path, monkeypatch):
+    path = tmp_path / "config.json"
+    path.write_bytes(b"original")
+    def fail(*args, **kwargs):
+        raise OSError("simulated backup failure")
+    monkeypatch.setattr(setup.os, "open", fail)
+    with pytest.raises(OSError, match="backup"):
+        setup.atomic_write(path, b"original", b"replacement")
+    assert path.read_bytes() == b"original"
+
+
+def test_edit_between_temp_write_and_swap_is_not_lost(tmp_path, monkeypatch):
+    path = tmp_path / "config.json"
+    path.write_bytes(b"original")
+    real_chmod = os.chmod
+    def edit_then_chmod(target, mode):
+        real_chmod(target, mode)
+        path.write_bytes(b"client edit")
+    monkeypatch.setattr(setup.os, "chmod", edit_then_chmod)
+    with pytest.raises(ValueError, match="changed during setup"):
+        setup.atomic_write(path, b"original", b"replacement")
+    assert path.read_bytes() == b"client edit"
+
+
+@pytest.mark.parametrize("client", setup.CLIENTS)
+def test_setup_writes_backup_of_previous_file(client, sandbox):
+    _, paths = sandbox
+    path = paths[client]
+    seed(client, path)
+    before = path.read_bytes()
+    cli.main(["setup", "--client", client])
+    backups = list(path.parent.glob(path.name + ".pdfluent-backup-*"))
+    assert len(backups) == 1 and backups[0].read_bytes() == before
+
+
+@pytest.mark.parametrize("client", setup.CLIENTS)
+def test_dry_run_writes_no_backup(client, sandbox):
+    _, paths = sandbox
+    path = paths[client]
+    seed(client, path)
+    cli.main(["setup", "--client", client, "--dry-run"])
+    assert list(path.parent.glob("*.pdfluent-backup-*")) == []
+
+
+@pytest.mark.parametrize("client", setup.CLIENTS)
+def test_uninstall_leaves_foreign_entry_unless_forced(client, sandbox):
+    _, paths = sandbox
+    path = paths[client]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if client == "codex":
+        path.write_text('[mcp_servers.pdfluent]\ncommand = "someone-else"\nargs = ["serve"]\n', encoding="utf-8")
+    else:
+        path.write_text(json.dumps({"mcpServers": {"pdfluent": {"command": "someone-else", "args": ["serve"]}}}), encoding="utf-8")
+    saved = path.read_bytes()
+    with pytest.raises(SystemExit) as error:
+        cli.main(["uninstall", "--client", client])
+    assert error.value.code == 1
+    assert path.read_bytes() == saved
+    cli.main(["uninstall", "--client", client, "--force"])
+    key = "mcp_servers" if client == "codex" else "mcpServers"
+    assert "pdfluent" not in load(client, path)[key]
