@@ -309,3 +309,37 @@ def test_uninstall_leaves_foreign_entry_unless_forced(client, sandbox):
     cli.main(["uninstall", "--client", client, "--force"])
     key = "mcp_servers" if client == "codex" else "mcpServers"
     assert "pdfluent" not in load(client, path).get(key, {})
+
+
+def test_uninstall_ignores_foreign_launcher_with_our_first_argument(sandbox):
+    _, paths = sandbox
+    path = paths["cursor"]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    foreign = {"mcpServers": {"pdfluent": {"command": "/opt/company/custom-runner",
+                                           "args": ["pdfluent-mcp", "--company-config", "/c"]}}}
+    path.write_text(json.dumps(foreign), encoding="utf-8")
+    with pytest.raises(SystemExit):
+        cli.main(["setup", "--client", "cursor"])
+    with pytest.raises(SystemExit):
+        cli.main(["uninstall", "--client", "cursor"])
+    assert json.loads(path.read_text()) == foreign
+
+
+@pytest.mark.parametrize("command,args", [("/x/uvx", ["pdfluent-mcp"]), ("C:\\u\\uvx.exe", ["pdfluent-mcp", "--root", "r"]),
+                                         ("/usr/bin/python3.12", ["-m", "pdfluent_mcp"])])
+def test_ownership_accepts_what_setup_writes(command, args):
+    assert setup.is_ours({"command": command, "args": args})
+
+
+def test_backup_survives_in_place_write_during_swap(tmp_path, monkeypatch):
+    path = tmp_path / "config.json"
+    path.write_bytes(b"original")
+    real_replace = os.replace
+    def write_in_place_then_replace(src, dst):
+        with open(dst, "wb") as f:
+            f.write(b"late in-place edit")
+        real_replace(src, dst)
+    monkeypatch.setattr(setup.os, "replace", write_in_place_then_replace)
+    backup = setup.atomic_write(path, b"original", b"replacement")
+    assert path.read_bytes() == b"replacement"
+    assert backup.read_bytes() == b"late in-place edit"

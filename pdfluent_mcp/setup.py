@@ -42,9 +42,17 @@ def launcher() -> tuple[str, list[str]]:
 
 
 def is_ours(entry: object) -> bool:
-    """True for an entry this tool could have written: a launcher running pdfluent-mcp."""
-    args = entry.get("args") if isinstance(entry, dict) else None
-    return isinstance(args, list) and (args[:1] == ["pdfluent-mcp"] or args[:2] == ["-m", "pdfluent_mcp"])
+    """True for an entry shaped like the one setup writes: uvx running pdfluent-mcp, or python -m pdfluent_mcp."""
+    if not isinstance(entry, dict):
+        return False
+    command, args = entry.get("command"), entry.get("args")
+    if not isinstance(command, str) or not isinstance(args, list):
+        return False
+    name = command.replace("\\", "/").rsplit("/", 1)[-1].lower()
+    stem = name[:-4] if name.endswith(".exe") else name
+    if stem == "uvx":
+        return args[:1] == ["pdfluent-mcp"]
+    return stem.startswith("python") and args[:2] == ["-m", "pdfluent_mcp"]
 
 
 def read_config(path: Path) -> Optional[bytes]:
@@ -88,10 +96,23 @@ def edit_config(client: str, path: Path, original: Optional[bytes], entry: dict,
 
 
 def write_backup(path: Path, original: bytes) -> Path:
-    """Keep the pre-edit bytes next to the config; never overwrite an earlier backup."""
+    """Keep the pre-edit file next to the config; never overwrite an earlier backup.
+
+    A hard link keeps the very inode that is about to be replaced, so a client that saves in place
+    during the swap still ends up in the backup. Where links are unavailable the bytes are copied.
+    """
     stamp = time.strftime("%Y%m%d-%H%M%S")
     for n in range(100):
         backup = path.with_name(f"{path.name}.pdfluent-backup-{stamp}" + (f"-{n}" if n else ""))
+        if backup.exists():
+            continue
+        try:
+            os.link(path, backup)
+            return backup
+        except FileExistsError:
+            continue
+        except OSError:
+            pass
         try:
             fd = os.open(backup, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
         except FileExistsError:
@@ -110,7 +131,7 @@ def atomic_write(path: Path, original: Optional[bytes], data: bytes) -> Optional
     if read_config(path) != original:
         raise ValueError(f"{path}: configuration changed during setup; retry")
     mode = stat.S_IMODE(path.stat().st_mode) if original is not None else 0o600
-    backup = write_backup(path, original) if original is not None else None
+    backup = None
     fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
     try:
         with os.fdopen(fd, "wb") as output:
@@ -121,6 +142,8 @@ def atomic_write(path: Path, original: Optional[bytes], data: bytes) -> Optional
         # Check again right before the swap, so the window for a lost edit is the rename alone.
         if read_config(path) != original:
             raise ValueError(f"{path}: configuration changed during setup; retry")
+        if original is not None:
+            backup = write_backup(path, original)
         os.replace(temporary, path)
     finally:
         if os.path.exists(temporary):
