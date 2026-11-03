@@ -308,4 +308,4 @@ def test_uninstall_leaves_foreign_entry_unless_forced(client, sandbox):
     assert path.read_bytes() == saved
     cli.main(["uninstall", "--client", client, "--force"])
     key = "mcp_servers" if client == "codex" else "mcpServers"
-    assert "pdfluent" not in load(client, path)[key]
+    assert "pdfluent" not in load(client, path).get(key, {})
