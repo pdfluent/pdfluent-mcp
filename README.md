@@ -13,7 +13,58 @@ Your documents stay on your machine. The server reads and writes only inside the
 directories you allow. The balanced quality tier needs model files; `pdfluent models
 install` downloads them once. Your documents are never uploaded.
 
+## Set up in one line
+
+```bash
+uvx pdfluent-mcp setup
+# or
+pipx run pdfluent-mcp setup
+```
+
+This registers a stdio server named `pdfluent` in the user configs of Claude
+Desktop, Claude Code, Cursor and Codex, then tells you to restart the clients.
+It adds `--root DIR` (repeatable) to the saved command for each directory you
+name, for example `uvx pdfluent-mcp setup --root ~/Documents`. Without
+`--root`, file access relies on client MCP roots or `PDFLUENT_MCP_ROOTS`
+([SETUP-001](CLAIMS.md#setup-001), [SETUP-002](CLAIMS.md#setup-002)).
+
+- `--dry-run` shows what would change and writes nothing.
+- `--client claude-desktop|claude-code|cursor|codex` limits it to some clients
+  (repeatable).
+- `uvx pdfluent-mcp uninstall` (or `setup --uninstall`) removes only the
+  `pdfluent` entry. It does not remove the Python package.
+
+Setup keeps unrelated settings and servers, preserves TOML comments, and
+refuses malformed configs and symbolic links. A different existing `pdfluent`
+entry is left alone unless you pass `--force`
+([SETUP-003](CLAIMS.md#setup-003)). The saved launcher uses the absolute `uvx`
+path when found, otherwise the current Python interpreter, which must stay
+installed ([SETUP-004](CLAIMS.md#setup-004)).
+
+Config files used: Claude Desktop's platform config (see below), Claude Code's
+`~/.claude.json`, Cursor's `~/.cursor/mcp.json`, and Codex's
+`~/.codex/config.toml` (`CODEX_HOME` is respected).
+
+One-click install, which registers the server with a placeholder root you then
+change: [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=pdfluent&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJwZGZsdWVudC1tY3AiLCItLXJvb3QiLCIvcGF0aC90by9kb2N1bWVudHMiXX0=)
+and [Install in VS Code](https://insiders.vscode.dev/redirect/mcp/install?name=pdfluent&config=%7B%22type%22%3A%22stdio%22%2C%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22pdfluent-mcp%22%2C%22--root%22%2C%22%2Fpath%2Fto%2Fdocuments%22%5D%7D).
+
 <!-- TODO: demo GIF (Claude Desktop asking for the tables of a local PDF). -->
+
+## Claude plugin
+
+The repository is also a Claude plugin (`.claude-plugin/plugin.json`). It
+bundles the `pdfluent` skill from `skill/` and starts the local MCP server with
+`uvx pdfluent-mcp==0.3.0` over stdio, so the plugin runs one pinned PyPI
+package and nothing else. A local MCP server loads in Claude Code and in
+Cowork sessions on your computer; chat on claude.ai ignores it.
+
+What the plugin does with data: the server reads PDFs only inside the
+directories you allow, and writes only the new file that `fill_form` creates
+there. It stores nothing, keeps no data after a call returns, and sends nothing
+to any other service. The one download is the `pdfluent` package and, if you
+choose the balanced tier, the model files from `pdfluent models install`. The
+plugin is not aimed at people under 18.
 
 ## Tools
 
@@ -48,46 +99,6 @@ Or into an environment of your own:
 pip install pdfluent-mcp
 pdfluent-mcp --root ~/Documents
 ```
-
-### One-line client setup
-
-Register the server with Claude Desktop, Claude Code, Cursor and Codex:
-([SETUP-001](CLAIMS.md#setup-001))
-
-```bash
-uvx pdfluent-mcp setup --root /path/to/documents
-# If installed with pip:
-pdfluent-mcp setup --root /path/to/documents
-```
-
-Choose an existing PDF directory. Repeat `--root` for more directories. Without
-`--root`, the server relies on client MCP roots or `PDFLUENT_MCP_ROOTS`.
-([SETUP-002](CLAIMS.md#setup-002))
-
-Preview changes, select clients, or remove the registration:
-([SETUP-003](CLAIMS.md#setup-003))
-
-```bash
-pdfluent-mcp setup --dry-run
-pdfluent-mcp setup --client claude-code --client codex --root /path/to/documents
-pdfluent-mcp uninstall --dry-run
-pdfluent-mcp uninstall
-# Equivalent removal command:
-pdfluent-mcp setup --uninstall
-```
-
-Setup defaults to all four clients, using their user configs: Claude Desktop's
-platform config described below, Claude Code's `~/.claude.json`, Cursor's
-`~/.cursor/mcp.json`, and Codex's `~/.codex/config.toml` (`CODEX_HOME` is
-respected). Restart clients after setup. Setup keeps unrelated settings and
-servers, preserves TOML comments, and refuses malformed configs or symbolic
-links. Use `--force` to replace a different existing `pdfluent` entry. Uninstall
-removes only the `pdfluent` entry; it does not remove the Python package.
-([SETUP-001](CLAIMS.md#setup-001), [SETUP-003](CLAIMS.md#setup-003))
-
-The saved launcher uses the absolute `uvx` path when available. Otherwise it
-uses the current Python interpreter; keep that Python environment installed.
-([SETUP-004](CLAIMS.md#setup-004))
 
 ### Allowed roots
 

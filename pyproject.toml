@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pdfluent-mcp"
-version = "0.2.0"
+version = "0.3.0"
 description = "MCP server for PDFluent: read, search and fill local PDFs from Claude, Cursor, VS Code and other MCP clients. Your documents stay on your machine."
 readme = "README.md"
 # The one licence field. The licence of this package follows the licence of
@@ -50,7 +50,7 @@ packages = ["pdfluent_mcp"]
 [tool.hatch.build.targets.sdist]
 # The tests (with their encrypted fixture and path-shaped comments) stay in the repository and run in
 # CI from there; the sdist carries the package, the skill and the metadata only.
-include = ["pdfluent_mcp", "skill", "server.json", "README.md", "CLAIMS.md", "LICENSE", "LICENSE-COMMERCIAL"]
+include = ["pdfluent_mcp", "skill", "server.json", "README.md", "CLAIMS.md", "CHANGELOG.md", "LICENSE", "LICENSE-COMMERCIAL"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
