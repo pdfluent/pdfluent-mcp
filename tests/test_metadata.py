@@ -19,4 +19,8 @@ def test_versions_agree():
     plugin = json.loads((ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
     assert plugin["version"] == version
     assert plugin["mcpServers"]["pdfluent"]["args"] == [f"pdfluent-mcp=={version}"]
+    # The Open Plugins layout (Cursor Directory) reads the server from .mcp.json and skills from skills/.
+    open_plugins = json.loads((ROOT / ".mcp.json").read_text(encoding="utf-8"))
+    assert open_plugins["mcpServers"]["pdfluent"] == plugin["mcpServers"]["pdfluent"]
+    assert plugin["skills"] == "./skills" and (ROOT / "skills/pdfluent/SKILL.md").is_file()
     assert f"## {version}" in (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")

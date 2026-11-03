@@ -62,7 +62,7 @@ and [Install in VS Code](https://insiders.vscode.dev/redirect/mcp/install?name=p
 ## Claude plugin
 
 The repository is also a Claude plugin (`.claude-plugin/plugin.json`). It
-bundles the `pdfluent` skill from `skill/` and starts the local MCP server with
+bundles the `pdfluent` skill from `skills/` and starts the local MCP server with
 `uvx pdfluent-mcp==0.3.0` over stdio, so the plugin runs one pinned PyPI
 package and nothing else. A local MCP server loads in Claude Code and in
 Cowork sessions on your computer; chat on claude.ai ignores it.
@@ -175,7 +175,7 @@ put this in the project's `.mcp.json`:
 }
 ```
 
-To tell Claude when to reach for these tools, copy `skill/pdfluent` from this
+To tell Claude when to reach for these tools, copy `skills/pdfluent` from this
 repository to `~/.claude/skills/pdfluent` (every project) or to
 `.claude/skills/pdfluent` in one project.
 

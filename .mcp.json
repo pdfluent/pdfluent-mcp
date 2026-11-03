@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "pdfluent": {
+      "command": "uvx",
+      "args": ["pdfluent-mcp==0.3.0"]
+    }
+  }
+}
