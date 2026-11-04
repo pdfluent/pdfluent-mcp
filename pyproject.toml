@@ -12,7 +12,7 @@ readme = "README.md"
 # expression and of the LICENSE file(s) listed below, nothing else.
 license = "AGPL-3.0-only OR LicenseRef-PDFluent-Commercial"
 license-files = ["LICENSE", "LICENSE-COMMERCIAL"]
-authors = [{ name = "Innovation Trigger B.V.", email = "team@pdfluent.com" }]
+authors = [{ name = "Innovation Trigger B.V.", email = "hello@pdfluent.com" }]
 # mcp 2.x needs 3.10.
 requires-python = ">=3.10"
 # mcp is MIT. pdfluent 1.2.0 is the first release with `pages=` on
