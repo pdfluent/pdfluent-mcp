@@ -4,6 +4,7 @@
   "version": "0.3.0",
   "description": "Read, search and fill local PDFs as markdown, text, tables and form fields. Runs on your machine; your documents are never uploaded.",
   "author": { "name": "Innovation Trigger B.V.", "url": "https://pdfluent.com" },
+  "icon": "./.claude-plugin/icon.png",
   "homepage": "https://pdfluent.com",
   "repository": "https://github.com/pdfluent/pdfluent-mcp",
   "license": "AGPL-3.0-only",

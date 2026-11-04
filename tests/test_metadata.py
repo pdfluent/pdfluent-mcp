@@ -24,3 +24,21 @@ def test_versions_agree():
     assert open_plugins["mcpServers"]["pdfluent"] == plugin["mcpServers"]["pdfluent"]
     assert plugin["skills"] == "./skills" and (ROOT / "skills/pdfluent/SKILL.md").is_file()
     assert f"## {version}" in (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+
+
+def test_plugin_icon_is_a_square_png_in_range():
+    plugin = json.loads((ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
+    icon = ROOT / plugin["icon"]
+    assert icon.is_file() and icon.stat().st_size < 2 * 1024 * 1024
+    data = icon.read_bytes()
+    assert data[:8] == b"\x89PNG\r\n\x1a\n"
+    width = int.from_bytes(data[16:20], "big")
+    height = int.from_bytes(data[20:24], "big")
+    assert width == height and 512 <= width <= 2048
+
+
+def test_launcher_lock_pins_this_version_with_hashes():
+    lock = (ROOT / "uv.lock").read_text(encoding="utf-8")
+    version = pdfluent_mcp.__version__
+    assert re.search(rf'^name = "pdfluent-mcp"\nversion = "{re.escape(version)}"$', lock, re.M)
+    assert 'hash = "sha256:' in lock
