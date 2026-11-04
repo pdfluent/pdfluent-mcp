@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import stat
 import subprocess
+import sysconfig
 import sys
 
 import pytest
@@ -220,7 +221,10 @@ def test_permissions_and_symlink(sandbox, tmp_path):
 def test_console_and_module_entrypoint(tmp_path):
     # Only a synthetic Codex config is selected. No real client files.
     env = dict(os.environ, CODEX_HOME=str(tmp_path / "codex"))
-    executable = Path(sys.executable).parent / ("pdfluent-mcp.exe" if os.name == "nt" else "pdfluent-mcp")
+    # A system Python on Windows keeps console scripts in Scripts\\, not next to python.exe.
+    scripts = Path(sysconfig.get_path("scripts"))
+    executable = scripts / ("pdfluent-mcp.exe" if os.name == "nt" else "pdfluent-mcp")
+    assert executable.is_file(), executable
     for command in ([str(executable)], [sys.executable, "-m", "pdfluent_mcp"]):
         result = subprocess.run([*command, "setup", "--client", "codex", "--dry-run"], env=env, capture_output=True, text=True)
         assert result.returncode == 0, result.stderr
