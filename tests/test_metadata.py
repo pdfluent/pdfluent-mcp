@@ -42,3 +42,9 @@ def test_launcher_lock_pins_this_version_with_hashes():
     version = pdfluent_mcp.__version__
     assert re.search(rf'^name = "pdfluent-mcp"\nversion = "{re.escape(version)}"$', lock, re.M)
     assert 'hash = "sha256:' in lock
+
+
+def test_privacy_policy_url_in_manifest_and_readme():
+    plugin = json.loads((ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
+    assert plugin["privacyPolicyUrl"] == "https://pdfluent.com/privacy/"
+    assert "](https://pdfluent.com/privacy/)" in (ROOT / "README.md").read_text(encoding="utf-8")

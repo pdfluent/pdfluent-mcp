@@ -245,3 +245,7 @@ on the PDFs in `tests/fixtures`, and try to step outside the allowed roots.
 The same as the `pdfluent` package it runs on: AGPL-3.0-only, or the PDFluent
 Commercial Licence. See `LICENSE` and `LICENSE-COMMERCIAL`. It depends on
 `mcp` (MIT).
+
+## Privacy
+
+[Privacy policy](https://pdfluent.com/privacy/)
