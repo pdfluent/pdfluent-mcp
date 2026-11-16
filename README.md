@@ -15,6 +15,11 @@
   <a href="https://pdfluent.com"><img src="https://img.shields.io/badge/by-PDFluent-111111" alt="PDFluent"/></a>
 </p>
 
+<p align="center">
+  <a href="cursor://anysphere.cursor-deeplink/mcp/install?name=pdfluent&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJwZGZsdWVudC1tY3AiLCItLXJvb3QiLCIvcGF0aC90by9kb2N1bWVudHMiXX0="><img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Add to Cursor" height="28"/></a>
+  <a href="https://insiders.vscode.dev/redirect/mcp/install?name=pdfluent&config=%7B%22type%22%3A%22stdio%22%2C%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22pdfluent-mcp%22%2C%22--root%22%2C%22%2Fpath%2Fto%2Fdocuments%22%5D%7D"><img src="https://img.shields.io/badge/VS_Code-Install_Server-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white" alt="Install in VS Code" height="28"/></a>
+</p>
+
 <!-- mcp-name: io.github.pdfluent/pdfluent-mcp -->
 
 An [MCP](https://modelcontextprotocol.io) server for
@@ -35,6 +40,18 @@ are never uploaded.
 ```bash
 uvx pdfluent-mcp setup --root ~/Documents
 ```
+
+One line per client, each with `/path/to/documents` replaced by the folder your
+PDFs live in:
+
+| Client | Install |
+|---|---|
+| Claude Desktop | `uvx pdfluent-mcp setup --client claude-desktop --root /path/to/documents`, then restart Claude Desktop |
+| Claude Code | `claude mcp add pdfluent -- uvx pdfluent-mcp --root /path/to/documents` |
+| Claude Code (plugin, with the skill) | `claude plugin marketplace add pdfluent/pdfluent-mcp`, then `claude plugin install pdfluent@pdfluent` |
+| Cursor | the Add to Cursor button above, then change the root |
+| VS Code | `code --add-mcp '{"name":"pdfluent","type":"stdio","command":"uvx","args":["pdfluent-mcp","--root","/path/to/documents"]}'` |
+| Windsurf | add the `pdfluent` server to Windsurf's `mcp_config.json` ([Windsurf](#windsurf)) |
 
 This registers a stdio server named `pdfluent` in the user configs of Claude
 Desktop, Claude Code, Cursor and Codex, then tells you to restart the clients.
@@ -187,6 +204,26 @@ Or add to `.vscode/mcp.json` in the workspace (note the key is `servers`):
 ```
 
 </details>
+
+### Windsurf
+
+Open Cascade's MCP settings and choose to edit the config file, or edit
+`~/.codeium/windsurf/mcp_config.json` (Windows:
+`%USERPROFILE%\.codeium\windsurf\mcp_config.json`) yourself. Newer builds
+that ship as Devin Desktop read `~/.config/devin/mcp_config.json`. Add:
+
+```json
+{
+  "mcpServers": {
+    "pdfluent": {
+      "command": "uvx",
+      "args": ["pdfluent-mcp", "--root", "/path/to/documents"]
+    }
+  }
+}
+```
+
+Then refresh the server list in Cascade.
 
 ### Codex
 

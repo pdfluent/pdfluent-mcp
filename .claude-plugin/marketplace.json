@@ -1,0 +1,19 @@
+{
+  "name": "pdfluent",
+  "description": "PDFluent plugins for Claude Code: read, search and fill local PDFs.",
+  "owner": {
+    "name": "Innovation Trigger B.V.",
+    "url": "https://pdfluent.com"
+  },
+  "plugins": [
+    {
+      "name": "pdfluent",
+      "source": "./",
+      "description": "Read, search and fill local PDFs as markdown, text, tables and form fields. Runs on your machine; your documents are never uploaded.",
+      "homepage": "https://pdfluent.com",
+      "repository": "https://github.com/pdfluent/pdfluent-mcp",
+      "license": "AGPL-3.0-only",
+      "keywords": ["pdf", "mcp", "extraction", "tables", "forms", "rag", "local"]
+    }
+  ]
+}
