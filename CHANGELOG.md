@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1
+
+- Relicense the MCP server from AGPL-3.0-only or commercial to MIT. The
+  `pdfluent` SDK it depends on keeps its own licence (AGPL-3.0 or commercial).
+- Remove `LICENSE-COMMERCIAL` from this repository; it applies to the SDK only.
+
 ## 0.3.0
 
 - Add `pdfluent-mcp setup`: registers the server in the user configs of Claude

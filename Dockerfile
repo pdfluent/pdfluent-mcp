@@ -16,7 +16,7 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
 WORKDIR /app
-COPY pyproject.toml README.md LICENSE LICENSE-COMMERCIAL ./
+COPY pyproject.toml README.md LICENSE ./
 COPY pdfluent_mcp ./pdfluent_mcp
 RUN pip install "pdfluent==${PDFLUENT_VERSION}" . \
     && useradd --create-home --uid 10001 mcp \
@@ -27,6 +27,6 @@ WORKDIR /data
 
 LABEL org.opencontainers.image.title="pdfluent-mcp" \
       org.opencontainers.image.source="https://github.com/pdfluent/pdfluent-mcp" \
-      org.opencontainers.image.licenses="AGPL-3.0-only OR LicenseRef-PDFluent-Commercial"
+      org.opencontainers.image.licenses="MIT"
 
 ENTRYPOINT ["pdfluent-mcp", "--root", "/data"]
