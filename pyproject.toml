@@ -4,14 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pdfluent-mcp"
-version = "0.3.0"
+version = "0.3.1"
 description = "MCP server for PDFluent: read, search and fill local PDFs from Claude, Cursor, VS Code and other MCP clients. Your documents stay on your machine."
 readme = "README.md"
-# The one licence field. The licence of this package follows the licence of
-# the `pdfluent` package it runs on; a change there is a change of this
-# expression and of the LICENSE file(s) listed below, nothing else.
-license = "AGPL-3.0-only OR LicenseRef-PDFluent-Commercial"
-license-files = ["LICENSE", "LICENSE-COMMERCIAL"]
+# The MCP server is MIT. The `pdfluent` SDK it depends on is AGPL-3.0-only or
+# commercial and keeps its own licence.
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [{ name = "Innovation Trigger B.V.", email = "hello@pdfluent.com" }]
 # mcp 2.x needs 3.10.
 requires-python = ">=3.10"
@@ -22,6 +21,7 @@ keywords = ["mcp", "model-context-protocol", "pdf", "rag", "agent", "claude", "c
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -50,7 +50,7 @@ packages = ["pdfluent_mcp"]
 [tool.hatch.build.targets.sdist]
 # The tests (with their encrypted fixture and path-shaped comments) stay in the repository and run in
 # CI from there; the sdist carries the package, the skill and the metadata only.
-include = ["pdfluent_mcp", "skill", "server.json", "README.md", "CLAIMS.md", "CHANGELOG.md", "LICENSE", "LICENSE-COMMERCIAL"]
+include = ["pdfluent_mcp", "skill", "server.json", "README.md", "CLAIMS.md", "CHANGELOG.md", "LICENSE"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

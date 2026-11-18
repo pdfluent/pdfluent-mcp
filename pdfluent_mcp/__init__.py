@@ -4,6 +4,6 @@ The server object lives in :mod:`pdfluent_mcp.server` as ``server``; it is not
 re-exported here because that name would shadow the submodule.
 """
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 __all__ = ["__version__"]

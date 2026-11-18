@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://pypi.org/project/pdfluent-mcp/"><img src="https://img.shields.io/pypi/v/pdfluent-mcp?label=PyPI&color=111111" alt="PyPI"/></a>
-  <a href="https://github.com/pdfluent/pdfluent-mcp/blob/main/LICENSE"><img src="https://img.shields.io/badge/licence-AGPL--3.0%20%7C%20Commercial-111111" alt="Licence: AGPL-3.0 or commercial"/></a>
+  <a href="https://github.com/pdfluent/pdfluent-mcp/blob/main/LICENSE"><img src="https://img.shields.io/badge/licence-MIT-111111" alt="Licence: MIT"/></a>
   <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-server-111111" alt="MCP server"/></a>
   <a href="https://pdfluent.com"><img src="https://img.shields.io/badge/by-PDFluent-111111" alt="PDFluent"/></a>
 </p>
@@ -313,7 +313,7 @@ call returns, after which it is cut and says so. All three also read from
 
 The repository is also a Claude plugin (`.claude-plugin/plugin.json`). It
 bundles the `pdfluent` skill from `skills/` and starts the local MCP server with
-`uvx pdfluent-mcp==0.3.0` over stdio, so the plugin runs one pinned PyPI
+`uvx pdfluent-mcp==0.3.1` over stdio, so the plugin runs one pinned PyPI
 package and nothing else. A local MCP server loads in Claude Code and in
 Cowork sessions on your computer; chat on claude.ai ignores it.
 
@@ -341,9 +341,9 @@ on the PDFs in `tests/fixtures`, and try to step outside the allowed roots.
 
 ## Licence
 
-The same as the `pdfluent` package it runs on: AGPL-3.0-only, or the PDFluent
-Commercial Licence. See `LICENSE` and `LICENSE-COMMERCIAL`. It depends on
-`mcp` (MIT).
+The MCP server is MIT. See `LICENSE`. It depends on the PDFluent SDK, which is
+AGPL-3.0 or commercial; see [pdfluent.com/license](https://pdfluent.com/license).
+It also depends on `mcp` (MIT).
 
 ## Privacy
 
