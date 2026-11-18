@@ -79,6 +79,8 @@ quality tier needs model files; `pdfluent models install` downloads them once.
 
 Page numbers are 0-based in every argument and result.
 
+Using it from an agent framework? See [docs/integrations.md](docs/integrations.md) for the OpenAI Agents SDK, CrewAI, DSPy and Vercel AI SDK.
+
 <details>
 <summary>Tool arguments and result details</summary>
 
