@@ -13,6 +13,7 @@
   <a href="https://github.com/pdfluent/pdfluent-mcp/blob/main/LICENSE"><img src="https://img.shields.io/badge/licence-MIT-111111" alt="Licence: MIT"/></a>
   <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-server-111111" alt="MCP server"/></a>
   <a href="https://pdfluent.com"><img src="https://img.shields.io/badge/by-PDFluent-111111" alt="PDFluent"/></a>
+  <a href="https://glama.ai/mcp/servers/pdfluent/pdfluent-mcp"><img src="https://glama.ai/mcp/servers/pdfluent/pdfluent-mcp/badges/score.svg" alt="pdfluent/pdfluent-mcp MCP server"/></a>
 </p>
 
 <p align="center">
