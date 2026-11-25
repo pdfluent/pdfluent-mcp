@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "pdfluent-hosted": {
+      "type": "http",
+      "url": "https://api.pdfluent.com/mcp",
+      "headers": {
+        "x-api-key": "${PDFLUENT_API_KEY}"
+      }
+    }
+  }
+}

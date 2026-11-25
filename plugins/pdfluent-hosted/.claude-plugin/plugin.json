@@ -1,0 +1,13 @@
+{
+  "name": "pdfluent-hosted",
+  "displayName": "PDFluent (hosted)",
+  "version": "0.1.0",
+  "description": "PDFluent hosted API as MCP tools: PDF to markdown and tables, PDF operations and conversions. Calls are paid in prepaid credits.",
+  "author": { "name": "Innovation Trigger B.V.", "url": "https://pdfluent.com" },
+  "homepage": "https://pdfluent.com/docs/api/mcp/",
+  "repository": "https://github.com/pdfluent/pdfluent-mcp",
+  "license": "MIT",
+  "keywords": ["pdf", "mcp", "extraction", "tables", "markdown", "hosted"],
+  "skills": "./skills",
+  "mcpServers": "./.mcp.json"
+}
