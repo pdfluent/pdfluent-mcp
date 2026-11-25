@@ -1,0 +1,2 @@
+openai-agents>=0.25
+pdfluent-mcp>=0.3
