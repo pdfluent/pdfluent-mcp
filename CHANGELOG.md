@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.2
+
+- Give every tool a title, as the Claude connectors directory and ChatGPT app review require.
+- List the hosted remote (`https://api.pdfluent.com/mcp`) in the MCP registry entry.
+
 ## 0.3.1
 
 - Relicense the MCP server from AGPL-3.0-only or commercial to MIT. The

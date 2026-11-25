@@ -1,7 +1,7 @@
 {
   "name": "pdfluent",
   "displayName": "PDFluent",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Read, search and fill local PDFs as markdown, text, tables and form fields. Runs on your machine; your documents are never uploaded.",
   "author": { "name": "Innovation Trigger B.V.", "url": "https://pdfluent.com" },
   "icon": "./.claude-plugin/icon.png",
@@ -14,7 +14,7 @@
   "mcpServers": {
     "pdfluent": {
       "command": "uvx",
-      "args": ["pdfluent-mcp==0.3.1"]
+      "args": ["pdfluent-mcp==0.3.2"]
     }
   }
 }
