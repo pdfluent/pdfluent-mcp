@@ -19,6 +19,9 @@
 <p align="center">
   <a href="cursor://anysphere.cursor-deeplink/mcp/install?name=pdfluent&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJwZGZsdWVudC1tY3AiLCItLXJvb3QiLCIvcGF0aC90by9kb2N1bWVudHMiXX0="><img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Add to Cursor" height="28"/></a>
   <a href="https://insiders.vscode.dev/redirect/mcp/install?name=pdfluent&config=%7B%22type%22%3A%22stdio%22%2C%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22pdfluent-mcp%22%2C%22--root%22%2C%22%2Fpath%2Fto%2Fdocuments%22%5D%7D"><img src="https://img.shields.io/badge/VS_Code-Install_Server-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white" alt="Install in VS Code" height="28"/></a>
+  <br/>
+  <a href="cursor://anysphere.cursor-deeplink/mcp/install?name=pdfluent-hosted&config=eyJ1cmwiOiJodHRwczovL2FwaS5wZGZsdWVudC5jb20vbWNwIiwiaGVhZGVycyI6eyJ4LWFwaS1rZXkiOiJZT1VSX0FQSV9LRVkifX0="><img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Add the hosted server to Cursor" height="28"/></a>
+  <a href="https://insiders.vscode.dev/redirect/mcp/install?name=pdfluent-hosted&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fapi.pdfluent.com%2Fmcp%22%2C%22headers%22%3A%7B%22x-api-key%22%3A%22YOUR_API_KEY%22%7D%7D"><img src="https://img.shields.io/badge/VS_Code-Install_hosted_server-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white" alt="Install the hosted server in VS Code" height="28"/></a>
 </p>
 
 <!-- mcp-name: io.github.pdfluent/pdfluent-mcp -->
@@ -239,6 +242,25 @@ args = ["pdfluent-mcp", "--root", "/path/to/documents"]
 One-click install for Cursor and VS Code registers the server with a
 placeholder root that you then change.
 
+## Hosted server
+
+The same tools run as a hosted MCP server at `https://api.pdfluent.com/mcp`
+(streamable HTTP), for clients that cannot run `uvx` or when you would rather
+not run anything locally. Unlike the local server, it sends the document to
+PDFluent's hosted API. It needs a PDFluent API key from the console and is paid
+in credits; see the [hosted API docs](https://pdfluent.com/docs/api/mcp/).
+Send the key in the `x-api-key` header.
+
+| Client | Install |
+|---|---|
+| Cursor | [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=pdfluent-hosted&config=eyJ1cmwiOiJodHRwczovL2FwaS5wZGZsdWVudC5jb20vbWNwIiwiaGVhZGVycyI6eyJ4LWFwaS1rZXkiOiJZT1VSX0FQSV9LRVkifX0=), then replace `YOUR_API_KEY` |
+| VS Code | [Install in VS Code](https://insiders.vscode.dev/redirect/mcp/install?name=pdfluent-hosted&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fapi.pdfluent.com%2Fmcp%22%2C%22headers%22%3A%7B%22x-api-key%22%3A%22YOUR_API_KEY%22%7D%7D), then replace `YOUR_API_KEY` |
+| Claude Code | `claude mcp add --transport http pdfluent-hosted https://api.pdfluent.com/mcp --header "x-api-key: $PDFLUENT_API_KEY"` |
+| Claude Code (plugin, with the skill) | `claude plugin marketplace add pdfluent/pdfluent-mcp`, then `claude plugin install pdfluent-hosted@pdfluent`, with `PDFLUENT_API_KEY` set in your environment |
+
+Other clients: add a remote server with the URL above and the header
+`x-api-key: <your key>`. `Authorization: Bearer <your key>` works as well.
+
 ## Reference
 
 <details>
@@ -317,6 +339,10 @@ bundles the `pdfluent` skill from `skills/` and starts the local MCP server with
 `uvx pdfluent-mcp==0.3.1` over stdio, so the plugin runs one pinned PyPI
 package and nothing else. A local MCP server loads in Claude Code and in
 Cowork sessions on your computer; chat on claude.ai ignores it.
+
+The `pdfluent-hosted` plugin in `plugins/pdfluent-hosted` is separate: it
+connects Claude Code to the hosted server and sends the document to
+`api.pdfluent.com`. It reads the key from `PDFLUENT_API_KEY`.
 
 What the plugin does with data: the server reads PDFs only inside the
 directories you allow, and writes only the new file that `fill_form` creates

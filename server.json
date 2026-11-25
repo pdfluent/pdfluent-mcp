@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.pdfluent/pdfluent-mcp",
   "title": "PDFluent",
-  "description": "Read, search and fill PDFs as markdown, text, tables, forms. Your documents stay on your machine.",
+  "description": "Read, search and fill PDFs as markdown, text, tables, forms. Local, or hosted at api.pdfluent.com.",
   "repository": {
     "url": "https://github.com/pdfluent/pdfluent-mcp",
     "source": "github"
@@ -48,6 +48,20 @@
           "description": "Longest result one call returns, in characters (default 200000).",
           "isRequired": false,
           "format": "number"
+        }
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.pdfluent.com/mcp",
+      "headers": [
+        {
+          "name": "x-api-key",
+          "description": "PDFluent API key from the console at pdfluent.com. Sending it as 'Authorization: Bearer <key>' also works. Clients that support MCP OAuth can sign in through the discovery documents on api.pdfluent.com instead.",
+          "isRequired": true,
+          "isSecret": true
         }
       ]
     }
