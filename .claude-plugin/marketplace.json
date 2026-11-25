@@ -1,6 +1,6 @@
 {
   "name": "pdfluent",
-  "description": "PDFluent plugins for Claude Code: read, search and fill local PDFs, or call the hosted API.",
+  "description": "PDFluent plugins for Claude Code: read, search and fill local PDFs, or call the hosted Extract and PDF APIs.",
   "owner": {
     "name": "Innovation Trigger B.V.",
     "url": "https://pdfluent.com"
@@ -24,9 +24,44 @@
       ]
     },
     {
+      "name": "pdfluent-extract",
+      "source": "./plugins/pdfluent-extract",
+      "description": "PDFluent Extract API as MCP tools: PDF to markdown, text, tables and chunks, plus search and document info. Asks for your PDFluent API key; calls are paid in credits.",
+      "homepage": "https://pdfluent.com/docs/api/mcp/",
+      "repository": "https://github.com/pdfluent/pdfluent-mcp",
+      "license": "MIT",
+      "keywords": [
+        "pdf",
+        "mcp",
+        "extraction",
+        "tables",
+        "markdown",
+        "rag",
+        "hosted"
+      ]
+    },
+    {
+      "name": "pdfluent-pdf",
+      "source": "./plugins/pdfluent-pdf",
+      "description": "PDFluent PDF API as MCP tools: merge, split, compress, redact, fill forms, convert, PDF/A and OCR. Asks for your PDFluent API key; calls are paid in credits.",
+      "homepage": "https://pdfluent.com/docs/api/mcp/",
+      "repository": "https://github.com/pdfluent/pdfluent-mcp",
+      "license": "MIT",
+      "keywords": [
+        "pdf",
+        "mcp",
+        "merge",
+        "forms",
+        "convert",
+        "pdfa",
+        "ocr",
+        "hosted"
+      ]
+    },
+    {
       "name": "pdfluent-hosted",
       "source": "./plugins/pdfluent-hosted",
-      "description": "PDFluent hosted API as MCP tools: PDF to markdown and tables, PDF operations and conversions. Asks for your PDFluent API key; calls are paid in credits.",
+      "description": "Both products in one plugin: the full PDFluent hosted tool set at /mcp. Kept so existing installs keep working; new installs should pick pdfluent-extract or pdfluent-pdf.",
       "homepage": "https://pdfluent.com/docs/api/mcp/",
       "repository": "https://github.com/pdfluent/pdfluent-mcp",
       "license": "MIT",
