@@ -255,8 +255,8 @@ Send the key in the `x-api-key` header.
 |---|---|
 | Cursor | [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=pdfluent-hosted&config=eyJ1cmwiOiJodHRwczovL2FwaS5wZGZsdWVudC5jb20vbWNwIiwiaGVhZGVycyI6eyJ4LWFwaS1rZXkiOiJZT1VSX0FQSV9LRVkifX0=), then replace `YOUR_API_KEY` |
 | VS Code | [Install in VS Code](https://insiders.vscode.dev/redirect/mcp/install?name=pdfluent-hosted&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fapi.pdfluent.com%2Fmcp%22%2C%22headers%22%3A%7B%22x-api-key%22%3A%22YOUR_API_KEY%22%7D%7D), then replace `YOUR_API_KEY` |
-| Claude Code | `claude mcp add --transport http pdfluent-hosted https://api.pdfluent.com/mcp --header "x-api-key: $PDFLUENT_API_KEY"` |
-| Claude Code (plugin, with the skill) | `claude plugin marketplace add pdfluent/pdfluent-mcp`, then `claude plugin install pdfluent-hosted@pdfluent`, with `PDFLUENT_API_KEY` set in your environment |
+| Claude Code | `claude mcp add --transport http pdfluent-hosted https://api.pdfluent.com/mcp --header "x-api-key: YOUR_API_KEY"`, then replace `YOUR_API_KEY` |
+| Claude Code (plugin, with the skill) | `claude plugin marketplace add pdfluent/pdfluent-mcp`, then `claude plugin install pdfluent-hosted@pdfluent`; Claude Code asks for your API key |
 
 Other clients: add a remote server with the URL above and the header
 `x-api-key: <your key>`. `Authorization: Bearer <your key>` works as well.
@@ -342,7 +342,7 @@ Cowork sessions on your computer; chat on claude.ai ignores it.
 
 The `pdfluent-hosted` plugin in `plugins/pdfluent-hosted` is separate: it
 connects Claude Code to the hosted server and sends the document to
-`api.pdfluent.com`. It reads the key from `PDFLUENT_API_KEY`.
+`api.pdfluent.com`. It asks for the key when you enable it and stores it as a sensitive setting.
 
 What the plugin does with data: the server reads PDFs only inside the
 directories you allow, and writes only the new file that `fill_form` creates

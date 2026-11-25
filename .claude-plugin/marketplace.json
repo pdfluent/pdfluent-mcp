@@ -26,7 +26,7 @@
     {
       "name": "pdfluent-hosted",
       "source": "./plugins/pdfluent-hosted",
-      "description": "PDFluent hosted API as MCP tools: PDF to markdown and tables, PDF operations and conversions. Needs a PDFLUENT_API_KEY; calls are paid in credits.",
+      "description": "PDFluent hosted API as MCP tools: PDF to markdown and tables, PDF operations and conversions. Asks for your PDFluent API key; calls are paid in credits.",
       "homepage": "https://pdfluent.com/docs/api/mcp/",
       "repository": "https://github.com/pdfluent/pdfluent-mcp",
       "license": "MIT",

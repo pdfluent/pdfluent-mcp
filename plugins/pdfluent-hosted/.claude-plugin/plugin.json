@@ -1,13 +1,33 @@
 {
   "name": "pdfluent-hosted",
   "displayName": "PDFluent (hosted)",
-  "version": "0.1.0",
-  "description": "PDFluent hosted API as MCP tools: PDF to markdown and tables, PDF operations and conversions. Calls are paid in prepaid credits.",
-  "author": { "name": "Innovation Trigger B.V.", "url": "https://pdfluent.com" },
+  "version": "0.2.0",
+  "description": "PDFluent hosted API as MCP tools: PDF to markdown and tables, PDF operations and conversions. Documents are sent to api.pdfluent.com; calls are paid in prepaid credits.",
+  "author": {
+    "name": "Innovation Trigger B.V.",
+    "url": "https://pdfluent.com"
+  },
   "homepage": "https://pdfluent.com/docs/api/mcp/",
   "repository": "https://github.com/pdfluent/pdfluent-mcp",
   "license": "MIT",
-  "keywords": ["pdf", "mcp", "extraction", "tables", "markdown", "hosted"],
+  "keywords": [
+    "pdf",
+    "mcp",
+    "extraction",
+    "tables",
+    "markdown",
+    "hosted"
+  ],
   "skills": "./skills",
-  "mcpServers": "./.mcp.json"
+  "privacyPolicyUrl": "https://pdfluent.com/privacy/",
+  "userConfig": {
+    "api_key": {
+      "type": "string",
+      "title": "PDFluent API key",
+      "description": "Create a key in the PDFluent console at pdfluent.com. It is sent to api.pdfluent.com as the x-api-key header and stored in your system keychain.",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "icon": "./.claude-plugin/icon.png"
 }

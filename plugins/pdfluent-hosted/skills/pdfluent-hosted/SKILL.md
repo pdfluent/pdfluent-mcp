@@ -18,10 +18,11 @@ before sending anything.
 
 ## Setup
 
-The plugin reads the API key from the `PDFLUENT_API_KEY` environment variable.
-If a call answers 401, the key is missing or invalid: tell the user to create a
-key in the PDFluent console and export `PDFLUENT_API_KEY` before starting
-Claude Code. Do not ask the user to paste the key into the chat.
+Claude Code asks for the PDFluent API key when the plugin is enabled and keeps
+it out of the conversation. If a call answers 401, the key is missing or
+invalid: tell the user to create a key in the PDFluent console and enter it
+again in the plugin settings. Do not ask the user to paste the key into the
+chat.
 
 ## Which tool
 
