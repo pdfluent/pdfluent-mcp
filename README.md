@@ -244,9 +244,15 @@ placeholder root that you then change.
 
 ## Hosted server
 
-The same tools run as a hosted MCP server at `https://api.pdfluent.com/mcp`
-(streamable HTTP), for clients that cannot run `uvx` or when you would rather
-not run anything locally. Unlike the local server, it sends the document to
+The hosted MCP server at `https://api.pdfluent.com/mcp` (streamable HTTP)
+gives an agent the tools of both PDFluent hosted products:
+[PDFluent Extract API](https://pdfluent.com/extract/hosted/) (PDF to markdown,
+tables and chunks for AI and RAG) and
+[PDFluent PDF API](https://pdfluent.com/pdf-api/hosted/) (convert, merge, split,
+compress, watermark, encrypt, redact, fill forms, PDF/A, PDF/UA, ZUGFeRD, OCR
+and barcodes). Both run on one account, with one API key and one credit
+balance. Use it for clients that cannot run `uvx`, or when you would rather not
+run anything locally. Unlike the local server, it sends the document to
 PDFluent's hosted API. It needs a PDFluent API key from the console and is paid
 in credits; see the [hosted API docs](https://pdfluent.com/docs/api/mcp/).
 Send the key in the `x-api-key` header.
