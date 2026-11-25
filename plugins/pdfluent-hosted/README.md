@@ -6,6 +6,12 @@ markdown, plain text or tables, to search it, to merge, split, compress, redact,
 watermark and fill PDFs, and to convert documents. It also bundles a skill that
 tells Claude which tool to pick and what a call costs.
 
+Since 25 November 2026 the same tools are also offered as two narrower
+plugins: `pdfluent-extract` (`https://api.pdfluent.com/mcp/extract`) and
+`pdfluent-pdf` (`https://api.pdfluent.com/mcp/pdf`). This plugin stays for
+existing installs and keeps the full tool set; choose one of the two for a new
+install.
+
 ## What leaves your machine
 
 The files Claude sends to a tool are uploaded to `api.pdfluent.com` and

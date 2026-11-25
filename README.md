@@ -257,6 +257,7 @@ Send the key in the `x-api-key` header.
 | VS Code | [Install in VS Code](https://insiders.vscode.dev/redirect/mcp/install?name=pdfluent-hosted&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fapi.pdfluent.com%2Fmcp%22%2C%22headers%22%3A%7B%22x-api-key%22%3A%22YOUR_API_KEY%22%7D%7D), then replace `YOUR_API_KEY` |
 | Claude Code | `claude mcp add --transport http pdfluent-hosted https://api.pdfluent.com/mcp --header "x-api-key: YOUR_API_KEY"`, then replace `YOUR_API_KEY` |
 | Claude Code (plugin, with the skill) | `claude plugin marketplace add pdfluent/pdfluent-mcp`, then `claude plugin install pdfluent-hosted@pdfluent`; Claude Code asks for your API key |
+| Claude Code (one product only) | `claude plugin install pdfluent-extract@pdfluent` (server `https://api.pdfluent.com/mcp/extract`) or `claude plugin install pdfluent-pdf@pdfluent` (server `https://api.pdfluent.com/mcp/pdf`) |
 
 Other clients: add a remote server with the URL above and the header
 `x-api-key: <your key>`. `Authorization: Bearer <your key>` works as well.
