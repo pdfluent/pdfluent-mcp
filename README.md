@@ -336,7 +336,7 @@ call returns, after which it is cut and says so. All three also read from
 
 The repository is also a Claude plugin (`.claude-plugin/plugin.json`). It
 bundles the `pdfluent` skill from `skills/` and starts the local MCP server with
-`uvx pdfluent-mcp==0.3.2` over stdio, so the plugin runs one pinned PyPI
+`uvx pdfluent-mcp==0.3.1` over stdio, so the plugin runs one pinned PyPI
 package and nothing else. A local MCP server loads in Claude Code and in
 Cowork sessions on your computer; chat on claude.ai ignores it.
 

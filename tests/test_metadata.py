@@ -14,7 +14,11 @@ def test_versions_agree():
     pyproject = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     assert re.search(rf'^version = "{re.escape(version)}"$', pyproject, re.M)
     server = json.loads((ROOT / "server.json").read_text(encoding="utf-8"))
-    assert server["version"] == version
+    # `version` is the registry entry's own number and may be ahead of the package: the registry
+    # refuses a re-publish of a version, so an entry-only change (such as adding the hosted remote)
+    # bumps it alone. The install pins track the package published on PyPI, which `pyproject` names.
+    entry = tuple(int(n) for n in server["version"].split("."))
+    assert entry >= tuple(int(n) for n in version.split(".")), "the registry entry must never go below the package"
     assert server["packages"][0]["version"] == version
     plugin = json.loads((ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
     assert plugin["version"] == version

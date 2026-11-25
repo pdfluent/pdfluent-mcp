@@ -1,9 +1,8 @@
 # Changelog
 
-## 0.3.2
+## Unreleased
 
 - Give every tool a title, as the Claude connectors directory and ChatGPT app review require.
-- List the hosted remote (`https://api.pdfluent.com/mcp`) in the MCP registry entry.
 
 ## 0.3.1
 

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pdfluent-mcp"
-version = "0.3.2"
+version = "0.3.1"
 description = "MCP server for PDFluent: read, search and fill local PDFs from Claude, Cursor, VS Code and other MCP clients. Your documents stay on your machine."
 readme = "README.md"
 # The MCP server is MIT. The `pdfluent` SDK it depends on is AGPL-3.0-only or
