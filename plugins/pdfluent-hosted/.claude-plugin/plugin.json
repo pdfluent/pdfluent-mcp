@@ -2,7 +2,7 @@
   "name": "pdfluent-hosted",
   "displayName": "PDFluent (hosted)",
   "version": "0.2.0",
-  "description": "PDFluent hosted API as MCP tools: PDF to markdown and tables, PDF operations and conversions. Documents are sent to api.pdfluent.com; calls are paid in prepaid credits.",
+  "description": "PDFluent Extract API and PDFluent PDF API as MCP tools, on one key and one credit balance: PDF to markdown, tables and chunks, plus convert, merge, split, compress, redact, forms, PDF/A, OCR and barcodes. Documents are sent to api.pdfluent.com; calls are paid in prepaid credits.",
   "author": {
     "name": "Innovation Trigger B.V.",
     "url": "https://pdfluent.com"
