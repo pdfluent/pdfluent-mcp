@@ -507,7 +507,7 @@ def _metadata(real: str, spelled: str) -> Dict[str, Any]:
 # -- tools ---------------------------------------------------------------------
 
 
-@server.tool(annotations=READ_ONLY)
+@server.tool(title="Read a PDF as markdown", annotations=READ_ONLY)
 @_readable
 async def extract_markdown(
     path: str,
@@ -540,7 +540,7 @@ async def extract_markdown(
     return await _in_thread(work)
 
 
-@server.tool(annotations=READ_ONLY)
+@server.tool(title="Read a PDF as plain text", annotations=READ_ONLY)
 @_readable
 async def extract_text(
     path: str,
@@ -571,7 +571,7 @@ async def extract_text(
     return await _in_thread(work)
 
 
-@server.tool(annotations=READ_ONLY)
+@server.tool(title="Extract tables from a PDF", annotations=READ_ONLY)
 @_readable
 async def extract_tables(
     path: str,
@@ -602,7 +602,7 @@ async def extract_tables(
     return await _in_thread(work)
 
 
-@server.tool(annotations=READ_ONLY)
+@server.tool(title="Extract positioned blocks from a PDF", annotations=READ_ONLY)
 @_readable
 async def extract_blocks(
     path: str,
@@ -649,7 +649,7 @@ async def extract_blocks(
     return await _in_thread(work)
 
 
-@server.tool(annotations=READ_ONLY)
+@server.tool(title="Get PDF metadata", annotations=READ_ONLY)
 @_readable
 async def get_metadata(path: str, ctx: Context = None) -> Dict[str, Any]:  # type: ignore[assignment]
     """What a local PDF is, before reading it.
@@ -670,7 +670,7 @@ async def get_metadata(path: str, ctx: Context = None) -> Dict[str, Any]:  # typ
     return await _in_thread(_metadata, real, path)
 
 
-@server.tool(annotations=READ_ONLY)
+@server.tool(title="Search a PDF", annotations=READ_ONLY)
 @_readable
 async def search(path: str, query: str, ctx: Context = None) -> Dict[str, Any]:  # type: ignore[assignment]
     """The pages of a local PDF that mention ``query``, with a snippet each.
@@ -704,7 +704,7 @@ async def search(path: str, query: str, ctx: Context = None) -> Dict[str, Any]: 
     return await _in_thread(work)
 
 
-@server.tool(annotations=READ_ONLY)
+@server.tool(title="List PDF form fields", annotations=READ_ONLY)
 @_readable
 async def list_form_fields(path: str, ctx: Context = None) -> Dict[str, Any]:  # type: ignore[assignment]
     """The interactive form fields of a local PDF.
@@ -731,7 +731,7 @@ async def list_form_fields(path: str, ctx: Context = None) -> Dict[str, Any]:  #
     return await _in_thread(work)
 
 
-@server.tool(annotations=WRITES_A_FILE)
+@server.tool(title="Fill a PDF form into a new file", annotations=WRITES_A_FILE)
 @_readable
 async def fill_form(
     path: str,
@@ -786,7 +786,7 @@ async def fill_form(
     return await _in_thread(work)
 
 
-@server.tool(annotations=READ_ONLY)
+@server.tool(title="Find PDF pages that need vision", annotations=READ_ONLY)
 @_readable
 async def vision_advice(path: str, ctx: Context = None) -> Dict[str, Any]:  # type: ignore[assignment]
     """Which pages of a local PDF are worth sending to a vision model, and why.

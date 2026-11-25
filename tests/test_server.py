@@ -113,6 +113,31 @@ def test_the_server_lists_every_tool():
     assert hints["fill_form"].read_only_hint is False
 
 
+def test_every_tool_meets_the_directory_listing_rules():
+    """Claude's connector directory and ChatGPT's app review both reject a tool that
+    lacks a title or an explicit read-only / destructive annotation, and the
+    directory caps tool names at 64 characters."""
+
+    async def body(session):
+        return await session.list_tools()
+
+    tools = _session(body, args=ROOT).tools
+    for tool in tools:
+        assert len(tool.name) <= 64, tool.name
+        assert tool.title and tool.title.strip(), f"{tool.name} has no title"
+        assert tool.annotations is not None, tool.name
+        assert tool.annotations.read_only_hint is not None, tool.name
+        assert tool.annotations.destructive_hint is not None, tool.name
+        assert tool.annotations.open_world_hint is False, tool.name
+        assert tool.description and len(tool.description) > 40, tool.name
+        # Only a tool that writes may be destructive; a read-only tool never is.
+        if tool.annotations.read_only_hint:
+            assert tool.annotations.destructive_hint is False, tool.name
+        else:
+            assert tool.annotations.destructive_hint is True, tool.name
+    assert len({t.title for t in tools}) == len(tools), "titles must be unique"
+
+
 def test_extract_markdown_reads_a_heading_a_list_item_and_a_table():
     result = _call("extract_markdown", {"path": STRUCTURED_PDF}, args=ROOT)
     assert not result.is_error, result.content
