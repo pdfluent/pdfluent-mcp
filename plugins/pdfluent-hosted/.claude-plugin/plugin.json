@@ -29,5 +29,8 @@
       "required": true
     }
   },
-  "icon": "./.claude-plugin/icon.png"
+  "icon": "./.claude-plugin/icon.png",
+  "supportUrl": "https://pdfluent.com/support/",
+  "documentationUrl": "https://pdfluent.com/docs/api/",
+  "termsOfServiceUrl": "https://pdfluent.com/terms/"
 }
