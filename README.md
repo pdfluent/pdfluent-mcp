@@ -37,7 +37,9 @@ on the `pdfluent` Python package. Your documents stay on your machine. The
 server reads and writes only inside the directories you allow. Your documents
 are never uploaded.
 
-<!-- TODO: demo GIF (Claude Desktop asking for the tables of a local PDF). -->
+![A terminal session: an MCP client starts pdfluent-mcp, lists its tools and calls extract_markdown on a PDF. The table comes back as markdown.](docs/demo.gif)
+
+A real run over stdio: a small MCP client launches the server, lists the tools and reads a local PDF as markdown.
 
 ## Quick start
 
