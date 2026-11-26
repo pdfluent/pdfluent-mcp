@@ -211,3 +211,10 @@ def test_the_two_products_split_the_tool_list_and_share_only_info():
     assert extract | pdf == known
     assert {"extract_markdown", "partition", "ai_query", "search"} <= extract
     assert {"pdf_merge", "forms_fill", "convert_html", "ocr_searchable"} <= pdf
+
+
+def test_the_manifest_carries_the_support_documentation_and_terms_urls(bundle):
+    manifest = _manifest(bundle)
+    assert manifest["supportUrl"] == "https://pdfluent.com/support/"
+    assert manifest["documentationUrl"] == "https://pdfluent.com/docs/api/"
+    assert manifest["termsOfServiceUrl"] == "https://pdfluent.com/terms/"
